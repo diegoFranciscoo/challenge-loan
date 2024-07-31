@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @AllArgsConstructor
@@ -16,15 +17,13 @@ public class LoanService {
     private List<ValidateLoans> validates;
 
     public ResponseDTO getLoans(CostumerDTO costumerDTO) {
-        List<LoanDTO> loans = new ArrayList<>();
 
-        for (ValidateLoans validateLoans : validates) {
-            LoanDTO validate = validateLoans.validate(costumerDTO);
-            if (validate != null) {
-                loans.add(validate);
-            }
-        }
+        List<LoanDTO> list = validates.stream()
+                .map(validate -> validate.validate(costumerDTO))
+                .filter(Objects::nonNull)
+                .toList();
 
-        return new ResponseDTO(costumerDTO.name(), loans);
+
+        return new ResponseDTO(costumerDTO.name(), list);
     }
 }
