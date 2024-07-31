@@ -5,15 +5,16 @@ import com.chalellenge.loans.dto.LoanDTO;
 import com.chalellenge.loans.dto.ResponseDTO;
 import com.chalellenge.loans.validates.ValidateLoans;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Objects;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class LoanService {
-    private List<ValidateLoans> validates;
+    private final List<ValidateLoans> validates;
 
     public ResponseDTO getLoans(CostumerDTO costumerDTO) {
 
